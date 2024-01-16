@@ -29,7 +29,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
       <UInput v-model="state.password" type="password" />
     </UFormGroup>
 
-    <UButton type="submit"> Submit </UButton>
+    <UButton type="submit"> Submit pene </UButton>
   </UForm>
   <br />
   <UProgress animation="carousel" />
