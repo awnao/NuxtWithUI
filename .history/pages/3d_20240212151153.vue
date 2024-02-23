@@ -1,0 +1,73 @@
+<template>
+  <div ref="container"></div>
+</template>
+
+<script>
+import * as THREE from "three";
+import { FontLoader } from "three/addons/loaders/FontLoader.js";
+import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
+
+import { GUI } from "three/addons/libs/lil-gui.module.min.js";
+
+export default {
+  mounted() {
+    // Cargar la fuente de tipografía
+    const loader = new FontLoader();
+    loader.load(
+      "https://cdn.rawgit.com/mrdoob/three.js/master/examples/fonts/helvetiker_regular.typeface.json",
+      function (font) {
+        // Crea la escena
+        const scene = new THREE.Scene();
+
+        // Crea la cámara
+        const camera = new THREE.PerspectiveCamera(
+          1,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000
+        );
+        camera.position.set(0, 0, 5);
+
+        // Crea el renderizador
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Crea la geometría del texto
+        const textGeometry = new TextGeometry("Soccerjam Chile)", {
+          font: font,
+          size: 1,
+          height: 0.5,
+          curveSegments: 12,
+          bevelEnabled: true,
+          bevelThickness: 0.03,
+          bevelSize: 0.02,
+          bevelOffset: 0,
+          bevelSegments: 5,
+        });
+
+        // Crea el material
+        const textMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+
+        // Crea la malla del texto
+        const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+
+        // Añade la malla a la escena
+        scene.add(textMesh);
+
+        // Crea una luz
+        const light = new THREE.PointLight(0xffffff, 1, 100);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+
+        // Renderiza la escena
+        function animate() {
+          requestAnimationFrame(animate);
+          renderer.render(scene, camera);
+        }
+        animate();
+      }
+    );
+  },
+};
+</script>
